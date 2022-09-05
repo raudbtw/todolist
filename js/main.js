@@ -24,19 +24,41 @@ function addTask(event) {
   tasks.push(newTask);
 
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
-
-  const taskHTML = ` <li id = '${newTask.id}' class="list-group-item d-flex justify-content-between task-item">
-  <span class="${cssClass}">${newTask.text}</span>
-  <div class="task-item__buttons">
-    <button type="button" data-action="done" class="btn-action">
-      <img src="./img/tick.svg" alt="Done" width="18" height="18" />
-    </button>
-    <button type="button" data-action="delete" class="btn-action">
-      <img src="./img/cross.svg" alt="Done" width="18" height="18" />
-    </button>
-  </div>
-</li>`;
-  tasksList.insertAdjacentHTML("beforeend", taskHTML);
+  const ul = document.querySelector("#tasksList");
+  const list = document.createElement("li");
+  list.id = `${newTask.id}`;
+  list.classList.add("list-group-item");
+  list.style = "d-flex justify-content-between task-item";
+  ul.appendChild(list);
+  const span = document.createElement("span");
+  span.textContent = `${newTask.text}`;
+  span.classList.add(`${cssClass}`);
+  list.appendChild(span);
+  const div = document.createElement("div");
+  div.classList.add("task-item__buttons");
+  list.appendChild(div);
+  const btnDone = document.createElement("button");
+  btnDone.classList.add("btn-action");
+  btnDone.setAttribute("data-action", "done");
+  const imgDone = document.createElement("img");
+  btnDone.type = "button";
+  imgDone.src = "./img/tick.svg";
+  imgDone.alt = "Done";
+  imgDone.width = "18";
+  imgDone.height = "18";
+  div.appendChild(btnDone);
+  btnDone.appendChild(imgDone);
+  const btnDelete = document.createElement("button");
+  btnDelete.classList.add("btn-action");
+  btnDelete.type = "button";
+  btnDelete.setAttribute("data-action", "delete");
+  const imgDelete = document.createElement("img");
+  imgDelete.src = "./img/cross.svg";
+  imgDelete.alt = "Done";
+  imgDelete.width = "18";
+  imgDelete.height = "18";
+  btnDelete.appendChild(imgDelete);
+  div.appendChild(btnDelete);
 
   taskInput.value = "";
   taskInput.focus();
