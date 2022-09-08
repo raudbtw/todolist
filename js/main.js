@@ -2,15 +2,18 @@ const form = document.querySelector("#form");
 const taskInput = document.querySelector("#taskInput");
 const tasksList = document.querySelector("#tasksList");
 const emptyList = document.querySelector("#emptyList");
+const filterOption = document.querySelector(".filter-todo");
 
 form.addEventListener("submit", addTask);
 
 tasksList.addEventListener("click", deleteTask);
 
 tasksList.addEventListener("click", doneTask);
+filterOption.addEventListener("change", filterTodo);
 
 let tasks = [];
-
+let ul;
+let list;
 function addTask(event) {
   event.preventDefault();
   const taskText = taskInput.value;
@@ -24,11 +27,10 @@ function addTask(event) {
   tasks.push(newTask);
 
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
-  const ul = document.querySelector("#tasksList");
-  const list = document.createElement("li");
+  ul = document.querySelector("#tasksList");
+  list = document.createElement("li");
   list.id = `${newTask.id}`;
   list.classList.add("list-group-item");
-  list.style = "d-flex justify-content-between task-item";
   ul.appendChild(list);
   const span = document.createElement("span");
   span.textContent = `${newTask.text}`;
@@ -62,10 +64,6 @@ function addTask(event) {
 
   taskInput.value = "";
   taskInput.focus();
-
-  if (tasksList.children.length > 1) {
-    emptyList.classList.add("none");
-  }
 }
 
 function deleteTask(event) {
@@ -92,4 +90,28 @@ function doneTask(event) {
     const taskTitle = parentNode.querySelector(".task-title");
     taskTitle.classList.toggle("task-title--done");
   }
+}
+
+function filterTodo(e) {
+  const todos = ul.childNodes;
+  todos.forEach(function (ul) {
+    switch (e.target.value) {
+      case "all":
+        ul.style.display = "block";
+        break;
+      case "completed":
+        if (ul.classList.contains("completed")) {
+          ul.style.display = "block";
+        } else {
+          ul.style.display = "none";
+        }
+        break;
+      case "uncompleted":
+        if (!ul.classList.contains("completed")) {
+          ul.style.display = "block";
+        } else {
+          ul.style.display = "none";
+        }
+    }
+  });
 }
