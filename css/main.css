@@ -55,6 +55,12 @@ body {
   color: #42be2a;
   font-size: 32px;
 }
+.btn.btn-primary.btn-lg {
+  margin-bottom: 20px;
+}
+.todo__options {
+  display: flex;
+}
 .btn-action {
   background-color: #e0e5ea;
   padding: 8px 10px;
