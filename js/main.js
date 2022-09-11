@@ -2,14 +2,14 @@ const form = document.querySelector("#form");
 const taskInput = document.querySelector("#taskInput");
 const tasksList = document.querySelector("#tasksList");
 const emptyList = document.querySelector("#emptyList");
-const filterOption = document.querySelector(".filter-todo");
+const filterOption = document.querySelector(".filter-todos");
 
 form.addEventListener("submit", addTask);
 
 tasksList.addEventListener("click", deleteTask);
 
 tasksList.addEventListener("click", doneTask);
-filterOption.addEventListener("change", filterTodo);
+filterOption.addEventListener("change", filterTodos);
 
 let tasks = [];
 let ul;
@@ -25,6 +25,7 @@ function addTask(event) {
   };
 
   tasks.push(newTask);
+  saveToLocalStorage();
 
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
   ul = document.querySelector("#tasksList");
@@ -78,6 +79,7 @@ function deleteTask(event) {
   tasks.splice(index, 1);
 
   parentNode.remove();
+  saveToLocalStorage();
 
   if (tasksList.children.length === 1) {
     emptyList.classList.remove("none");
@@ -85,33 +87,44 @@ function deleteTask(event) {
 }
 
 function doneTask(event) {
-  if (event.target.dataset.action === "done") {
-    const parentNode = event.target.closest(".list-group-item");
-    const taskTitle = parentNode.querySelector(".task-title");
-    taskTitle.classList.toggle("task-title--done");
-  }
+  if (event.target.dataset.action !== "done") return;
+  const parentNode = event.target.closest(".list-group-item");
+  const id = Number(parentNode.id);
+  const task = tasks.find((task) => task.id === id);
+  task.done = !task.done;
+  saveToLocalStorage();
+  const taskTitle = parentNode.querySelector(".task-title");
+  taskTitle.classList.toggle("task-title--done");
 }
 
-function filterTodo(e) {
+function saveToLocalStorage() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+function filterTodos(e) {
   const todos = ul.childNodes;
-  todos.forEach(function (ul) {
-    switch (e.target.value) {
-      case "all":
-        ul.style.display = "block";
-        break;
-      case "completed":
-        if (ul.classList.contains("completed")) {
-          ul.style.display = "block";
-        } else {
-          ul.style.display = "none";
-        }
-        break;
-      case "uncompleted":
-        if (!ul.classList.contains("completed")) {
-          ul.style.display = "block";
-        } else {
-          ul.style.display = "none";
-        }
+  todos.forEach(function (list) {
+    if (list.nodeName === "LI") {
+      switch (e.target.value) {
+        case "all":
+          list.style.display = "flex";
+          break;
+
+        case "completed":
+          if (list.children[0].classList.contains("task-title--done")) {
+            list.style.display = "flex";
+          } else {
+            list.style.display = "none";
+          }
+          break;
+
+        case "uncompleted":
+          if (list.children[0].classList.contains("task-title--done")) {
+            list.style.display = "none";
+          } else {
+            list.style.display = "flex";
+          }
+          break;
+      }
     }
   });
 }
