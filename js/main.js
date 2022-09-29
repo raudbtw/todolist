@@ -1,7 +1,7 @@
-const form = document.querySelector("#form");
-const taskInput = document.querySelector("#taskInput");
-const tasksList = document.querySelector("#tasksList");
-const emptyList = document.querySelector("#emptyList");
+const form = document.getElementById("form");
+const taskInput = document.getElementById("taskInput");
+const tasksList = document.getElementById("tasksList");
+const emptyList = document.getElementById("emptyList");
 const filterOption = document.querySelector(".filter-todos");
 
 form.addEventListener("submit", addTask);
