@@ -5,10 +5,11 @@ const emptyList = document.getElementById("emptyList");
 const filterOption = document.querySelector(".filter-todos");
 
 
-let tasks = [];
-let ul;
-let list;
+const tasks = [];
+
 function addTask(event) {
+  let ul;
+  let list;
   event.preventDefault();
   const taskText = taskInput.value;
 
@@ -19,45 +20,81 @@ function addTask(event) {
   };
 
   tasks.push(newTask);
+  
   saveToLocalStorage();
 
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
-  ul = document.querySelector("#tasksList");
+  
+  ul = document.getElementById("tasksList");
+  
   list = document.createElement("li");
+  
   list.id = `${newTask.id}`;
+  
   list.classList.add("list-group-item");
+  
   ul.appendChild(list);
+  
   const span = document.createElement("span");
+  
   span.textContent = `${newTask.text}`;
+  
   span.classList.add(`${cssClass}`);
+  
   list.appendChild(span);
+  
   const div = document.createElement("div");
+  
   div.classList.add("task-item__buttons");
+  
   list.appendChild(div);
+  
   const btnDone = document.createElement("button");
+  
   btnDone.classList.add("btn-action");
   btnDone.setAttribute("data-action", "done");
+  
   const imgDone = document.createElement("img");
+  
   btnDone.type = "button";
+  
   imgDone.src = "./img/tick.svg";
+  
   imgDone.alt = "Done";
+  
   imgDone.width = "18";
+  
   imgDone.height = "18";
+  
   div.appendChild(btnDone);
+  
   btnDone.appendChild(imgDone);
+  
   const btnDelete = document.createElement("button");
+  
   btnDelete.classList.add("btn-action");
+  
   btnDelete.type = "button";
+  
   btnDelete.setAttribute("data-action", "delete");
+  
   const imgDelete = document.createElement("img");
+  
   imgDelete.src = "./img/cross.svg";
+  
   imgDelete.alt = "Done";
+  
   imgDelete.width = "18";
+  
   imgDelete.height = "18";
+  
   btnDelete.appendChild(imgDelete);
+  
   div.appendChild(btnDelete);
 
+ 
   taskInput.value = "";
+  
   taskInput.focus();
 }
 
