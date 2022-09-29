@@ -8,8 +8,6 @@ const filterOption = document.querySelector(".filter-todos");
 const tasks = [];
 
 function addTask(event) {
-  let ul;
-  let list;
   event.preventDefault();
   const taskText = taskInput.value;
 
@@ -25,15 +23,15 @@ function addTask(event) {
 
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
   
-  ul = document.getElementById("tasksList");
+  const ul = document.getElementById("tasksList");
   
-  list = document.createElement("li");
+  const todoItem = document.createElement("li");
   
-  list.id = `${newTask.id}`;
+  todoItem.id = `${newTask.id}`;
   
-  list.classList.add("list-group-item");
+  todoItem.classList.add("list-group-item");
   
-  ul.appendChild(list);
+  ul.appendChild(todoItem);
   
   const span = document.createElement("span");
   
@@ -41,13 +39,13 @@ function addTask(event) {
   
   span.classList.add(`${cssClass}`);
   
-  list.appendChild(span);
+  todoItem.appendChild(span);
   
   const div = document.createElement("div");
   
   div.classList.add("task-item__buttons");
   
-  list.appendChild(div);
+  todoItem.appendChild(div);
   
   const btnDone = document.createElement("button");
   
@@ -133,26 +131,26 @@ function saveToLocalStorage() {
 }
 function filterTodos(e) {
   const todos = ul.childNodes;
-  todos.forEach(function (list) {
-    if (list.nodeName === "LI") {
+  todos.forEach(function (todoItem) {
+    if (todoItem.nodeName === "LI") {
       switch (e.target.value) {
         case "all":
-          list.style.display = "flex";
+          todoItem.style.display = "flex";
           break;
 
         case "completed":
-          if (list.children[0].classList.contains("task-title--done")) {
-            list.style.display = "flex";
+          if (todoItem.children[0].classList.contains("task-title--done")) {
+            todoItem.style.display = "flex";
           } else {
-            list.style.display = "none";
+            todoItem.style.display = "none";
           }
           break;
 
         case "uncompleted":
-          if (list.children[0].classList.contains("task-title--done")) {
-            list.style.display = "none";
+          if (todoItem.children[0].classList.contains("task-title--done")) {
+            todoItem.style.display = "none";
           } else {
-            list.style.display = "flex";
+            todoItem.style.display = "flex";
           }
           break;
       }
