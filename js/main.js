@@ -4,12 +4,6 @@ const tasksList = document.getElementById("tasksList");
 const emptyList = document.getElementById("emptyList");
 const filterOption = document.querySelector(".filter-todos");
 
-form.addEventListener("submit", addTask);
-
-tasksList.addEventListener("click", deleteTask);
-
-tasksList.addEventListener("click", doneTask);
-filterOption.addEventListener("change", filterTodos);
 
 let tasks = [];
 let ul;
@@ -128,3 +122,10 @@ function filterTodos(e) {
     }
   });
 }
+form.addEventListener("submit", addTask);
+
+tasksList.addEventListener("click", deleteTask);
+
+tasksList.addEventListener("click", doneTask);
+
+filterOption.addEventListener("change", filterTodos);
