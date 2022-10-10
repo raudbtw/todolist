@@ -4,7 +4,6 @@ const tasksList = document.getElementById("tasksList");
 const emptyList = document.getElementById("emptyList");
 const filterOption = document.querySelector(".filter-todos");
 
-
 const tasks = [];
 
 function addTask(event) {
@@ -18,81 +17,66 @@ function addTask(event) {
   };
 
   tasks.push(newTask);
-  
+
   saveToLocalStorage();
 
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
-  
-  const ul = document.getElementById("tasksList");
-  
+
+  // const ul = document.getElementById("tasksList");
+
   const todoItem = document.createElement("li");
-  
+
   todoItem.id = `${newTask.id}`;
-  
+
   todoItem.classList.add("list-group-item");
-  
-  ul.appendChild(todoItem);
-  
+
+  tasksList.appendChild(todoItem);
+
   const span = document.createElement("span");
-  
+
   span.textContent = `${newTask.text}`;
-  
+
   span.classList.add(`${cssClass}`);
-  
+
   todoItem.appendChild(span);
-  
+
   const div = document.createElement("div");
-  
+
   div.classList.add("task-item__buttons");
-  
+
   todoItem.appendChild(div);
-  
+
+  // создание и работа с btnDone
+
   const btnDone = document.createElement("button");
-  
   btnDone.classList.add("btn-action");
   btnDone.setAttribute("data-action", "done");
-  
-  const imgDone = document.createElement("img");
-  
   btnDone.type = "button";
-  
-  imgDone.src = "./img/tick.svg";
-  
-  imgDone.alt = "Done";
-  
-  imgDone.width = "18";
-  
-  imgDone.height = "18";
-  
   div.appendChild(btnDone);
-  
-  btnDone.appendChild(imgDone);
-  
-  const btnDelete = document.createElement("button");
-  
-  btnDelete.classList.add("btn-action");
-  
-  btnDelete.type = "button";
-  
-  btnDelete.setAttribute("data-action", "delete");
-  
-  const imgDelete = document.createElement("img");
-  
-  imgDelete.src = "./img/cross.svg";
-  
-  imgDelete.alt = "Done";
-  
-  imgDelete.width = "18";
-  
-  imgDelete.height = "18";
-  
-  btnDelete.appendChild(imgDelete);
-  
-  div.appendChild(btnDelete);
 
- 
+  // создание и работа с imgDone
+
+  const imgDone = document.createElement("img");
+  imgDone.src = "./img/tick.svg";
+  imgDone.alt = "Done";
+  imgDone.width = "18";
+  imgDone.height = "18";
+  btnDone.appendChild(imgDone);
+
+  // создание и работа с imgDelete
+
+  const btnDelete = document.createElement("button");
+  btnDelete.classList.add("btn-action");
+  btnDelete.type = "button";
+  btnDelete.setAttribute("data-action", "delete");
+  const imgDelete = document.createElement("img");
+  imgDelete.src = "./img/cross.svg";
+  imgDelete.alt = "Done";
+  imgDelete.width = "18";
+  imgDelete.height = "18";
+  btnDelete.appendChild(imgDelete);
+  div.appendChild(btnDelete);
   taskInput.value = "";
-  
   taskInput.focus();
 }
 
@@ -130,7 +114,7 @@ function saveToLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 function filterTodos(e) {
-  const todos = ul.childNodes;
+  const todos = tasksList.childNodes;
   todos.forEach(function (todoItem) {
     if (todoItem.nodeName === "LI") {
       switch (e.target.value) {
