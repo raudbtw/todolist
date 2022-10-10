@@ -115,7 +115,8 @@ function saveToLocalStorage() {
 }
 function filterTodos(e) {
   const todos = tasksList.childNodes;
-  todos.forEach(function (todoItem) {
+  const todoValues = Object.values(todos);
+  const res = todoValues.filter(function (todoItem) {
     if (todoItem.nodeName === "LI") {
       switch (e.target.value) {
         case "all":
