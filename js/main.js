@@ -4,6 +4,8 @@ const tasksList = document.getElementById("tasksList");
 const emptyList = document.getElementById("emptyList");
 const filterOption = document.querySelector(".filter-todos");
 
+//create todo tasks
+
 const tasks = [];
 
 function addTask(event) {
@@ -20,28 +22,22 @@ function addTask(event) {
 
   saveToLocalStorage();
 
+  //add  CSS class
+
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
 
+  //create todo items
+
   const todoItem = document.createElement("li");
-
   todoItem.id = `${newTask.id}`;
-
   todoItem.classList.add("list-group-item");
-
   tasksList.appendChild(todoItem);
-
   const span = document.createElement("span");
-
   span.textContent = `${newTask.text}`;
-
   span.classList.add(`${cssClass}`);
-
   todoItem.appendChild(span);
-
   const div = document.createElement("div");
-
   div.classList.add("task-item__buttons");
-
   todoItem.appendChild(div);
 
   // создание и работа с btnDone
@@ -80,16 +76,12 @@ function addTask(event) {
 
 function deleteTask(event) {
   if (event.target.dataset.action !== "delete") return;
-
   const parentNode = event.target.closest(".list-group-item");
-
   const id = parentNode.id;
-
   const index = tasks.findIndex((task) => task.id == id);
-
   tasks.splice(index, 1);
-
   parentNode.remove();
+
   saveToLocalStorage();
 
   if (tasksList.children.length === 1) {
