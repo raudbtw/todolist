@@ -22,8 +22,6 @@ function addTask(event) {
 
   const cssClass = newTask.done ? "task-title task-title--done" : "task-title";
 
-  // const ul = document.getElementById("tasksList");
-
   const todoItem = document.createElement("li");
 
   todoItem.id = `${newTask.id}`;
